@@ -103,7 +103,7 @@ const PurchaseForm = () => {
         });
       setIsLoading(false);
     })();
-  }, [formData]);
+  }, []);
 
   const calculateTotalAmount = () => {
     return formData.items?.reduce(
