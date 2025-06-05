@@ -1,6 +1,6 @@
 {
   "name": "reel-supply-backend",
-  "module": "index.ts",
+  "module": "index.js",
   "type": "module",
   "scripts": {
     "start": "node index.js",
