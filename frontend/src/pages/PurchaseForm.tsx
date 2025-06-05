@@ -88,7 +88,7 @@ const PurchaseForm = () => {
             item.quantity = 0;
             return item;
           });
-          setFormData({ ...formData!, items: purchaseItems });
+          setFormData({ ...formData, items: purchaseItems });
         })
         .catch((error) => {
           console.log(error);
@@ -103,7 +103,7 @@ const PurchaseForm = () => {
         });
       setIsLoading(false);
     })();
-  }, []);
+  }, [formData]);
 
   const calculateTotalAmount = () => {
     return formData.items?.reduce(

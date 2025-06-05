@@ -1,15 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import {
-  Package,
-  Users,
-  ShoppingCart,
-  BarChart3,
-  Home,
-  Menu,
-  X,
-} from "lucide-react";
+import { Package, Users, ShoppingCart, Home, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface LayoutProps {
@@ -25,7 +17,6 @@ const Layout = ({ children }: LayoutProps) => {
     { name: "Products", href: "/products", icon: Package },
     { name: "Suppliers", href: "/suppliers", icon: Users },
     { name: "Purchases", href: "/purchases", icon: ShoppingCart },
-    { name: "Reports", href: "/reports", icon: BarChart3 },
   ];
 
   return (

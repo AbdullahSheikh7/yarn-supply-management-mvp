@@ -34,7 +34,15 @@ const Dashboard = () => {
   const COLORS = ["#3B82F6", "#EF4444", "#10B981", "#F59E0B", "#8B5CF6"];
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [dashboardData, setDashboardData] = useState<DashboardData>();
+  const [dashboardData, setDashboardData] = useState<DashboardData>({
+    productsCount: 0,
+    suppliersCount: 0,
+    purchasesCount: 0,
+    lowStockProducts: [],
+    categoryData: [],
+    statusData: [],
+    recentPurchases: [],
+  });
 
   useEffect(() => {
     setIsLoading(true);
@@ -156,7 +164,7 @@ const Dashboard = () => {
                   labelLine={false}
                   label={({ count, category }) =>
                     `${category} ${(
-                      (count / dashboardData?.productsCount!) *
+                      (count / dashboardData.productsCount) *
                       100
                     ).toFixed(0)}%`
                   }

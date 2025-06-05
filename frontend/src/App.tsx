@@ -7,7 +7,6 @@ import Products from "./pages/Products";
 import Suppliers from "./pages/Suppliers";
 import PurchaseForm from "./pages/PurchaseForm";
 import Purchases from "./pages/Purchases";
-import Reports from "./pages/Reports";
 import NotFound from "./pages/NotFound";
 
 const App = () => (
@@ -50,14 +49,6 @@ const App = () => (
           <Route path="" element={<Purchases />} />
           <Route path="new" element={<PurchaseForm />} />
         </Route>
-        <Route
-          path="/reports"
-          element={
-            <Layout>
-              <Reports />
-            </Layout>
-          }
-        />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
