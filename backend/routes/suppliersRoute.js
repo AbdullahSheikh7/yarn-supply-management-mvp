@@ -48,6 +48,14 @@ router.put("/:id", async (req, res) => {
     res.json(updated);
   } catch (error) {
     console.log(error);
+    if (
+      error.codeName === "DuplicateKey" &&
+      error.keyPattern.supplier_code === 1
+    )
+      res.status(500).send({
+        message: `Cannot update supplier: Duplicate supplier code ${error.keyValue.supplier_code}`,
+        error: error.errorResponse,
+      });
     res.status(500).send({ message: error.message });
   }
 });

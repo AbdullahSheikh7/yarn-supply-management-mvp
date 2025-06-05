@@ -96,7 +96,7 @@ const Suppliers = () => {
         .then((res) => {
           setIsDialogOpen(false);
           resetForm();
-          toast("Product updated successfully");
+          toast("Supplier updated successfully");
           if (!suppliers) return;
           const newSuppliers = suppliers.map((item) => item);
           const productsIndex = suppliers.findIndex(
@@ -116,11 +116,11 @@ const Suppliers = () => {
           setSuppliers([...suppliers!, res.data]);
           setIsDialogOpen(false);
           resetForm();
-          toast("Product created successfully!");
+          toast("Supplier created successfully!");
         })
         .catch((error) => {
           console.log(error);
-          toast("Error creating product");
+          toast("Error creating supplier");
         });
     }
     setFormDisabled(false);
@@ -149,10 +149,10 @@ const Suppliers = () => {
     if (confirm("Are you sure you want to delete this supplier?")) {
       setIsLoading(true);
       await axios
-        .delete(`${backend}/products/${id}`)
+        .delete(`${backend}/suppliers/${id}`)
         .then(() => {
           setIsLoading(false);
-          toast("Product deleted successfully");
+          toast("Supplier deleted successfully");
           if (!suppliers) return;
           const newProducts = suppliers.map((item) => item);
           const productsIndex = suppliers.findIndex((item) => item._id === id);
