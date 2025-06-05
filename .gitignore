@@ -1,0 +1,70 @@
+reel-supply-nexus
+backend/node_modules
+frontend/node_modules
+
+# backend
+
+# dependencies (bun install)
+backend/node_modules
+
+# output
+backend/out
+backend/dist
+backend/*.tgz
+
+# code coverage
+backend/coverage
+backend/*.lcov
+
+# logs
+backend/logs
+backend/_.log
+backend/report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
+
+# dotenv environment variable files
+backend/.env
+backend/.env.development.local
+backend/.env.test.local
+backend/.env.production.local
+backend/.env.local
+
+# caches
+backend/.eslintcache
+backend/.cache
+backend/*.tsbuildinfo
+
+# IntelliJ based IDEs
+backend/.idea
+
+# Finder (MacOS) folder config
+backend/.DS_Store
+
+
+# Frontend
+
+# Logs
+frontend/logs
+frontend/.env
+frontend/*.log
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+frontend/lerna-debug.log*
+
+frontend/node_modules
+frontend/dist
+frontend/dist-ssr
+frontend/*.local
+
+# Editor directories and files
+frontend/.vscode/*
+frontend/!.vscode/extensions.json
+frontend/.idea
+frontend/.DS_Store
+frontend/*.suo
+frontend/*.ntvs*
+frontend/*.njsproj
+frontend/*.sln
+frontend/*.sw?
+
