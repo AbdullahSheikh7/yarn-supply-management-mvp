@@ -33,7 +33,7 @@ export interface Supplier {
 }
 
 const Suppliers = () => {
-  const [formDisabled, setFormDisabled] = useState<boolean>(true);
+  const [formDisabled, setFormDisabled] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingSupplier, setEditingSupplier] = useState<Supplier | null>(null);
