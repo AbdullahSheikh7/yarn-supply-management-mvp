@@ -16,12 +16,18 @@ router.get("/", async (req, res) => {
 
 // GET single purchase
 router.get("/:id", async (req, res) => {
-  const purchase = await Purchase.findById(req.params.id).populate(
-    "supplier_id",
-    "company_name"
-  );
-  if (!purchase) return res.status(404).json({ message: "Purchase not found" });
-  res.json(purchase);
+  try {
+    const purchase = await Purchase.findById(req.params.id).populate(
+      "supplier_id",
+      "company_name"
+    );
+    if (!purchase)
+      return res.status(404).json({ message: "Purchase not found" });
+    res.json(purchase);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: error.message });
+  }
 });
 
 // POST create new purchase
@@ -38,18 +44,30 @@ router.post("/", async (req, res) => {
 
 // PUT update purchase
 router.put("/:id", async (req, res) => {
-  const updated = await Purchase.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
-  if (!updated) return res.status(404).json({ message: "Purchase not found" });
-  res.json(updated);
+  try {
+    const updated = await Purchase.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!updated)
+      return res.status(404).json({ message: "Purchase not found" });
+    res.json(updated);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: error.message });
+  }
 });
 
 // DELETE purchase
 router.delete("/:id", async (req, res) => {
-  const deleted = await Purchase.findByIdAndDelete(req.params.id);
-  if (!deleted) return res.status(404).json({ message: "Purchase not found" });
-  res.json({ message: "Purchase deleted" });
+  try {
+    const deleted = await Purchase.findByIdAndDelete(req.params.id);
+    if (!deleted)
+      return res.status(404).json({ message: "Purchase not found" });
+    res.json({ message: "Purchase deleted" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: error.message });
+  }
 });
 
 export default router;
