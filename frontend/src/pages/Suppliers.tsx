@@ -33,6 +33,7 @@ export interface Supplier {
 }
 
 const Suppliers = () => {
+  const [formDisabled, setFormDisabled] = useState<boolean>(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingSupplier, setEditingSupplier] = useState<Supplier | null>(null);
@@ -86,8 +87,43 @@ const Suppliers = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFormDisabled(true);
+    if (editingSupplier) {
+      await axios
+        .put(`${backend}/suppliers/${editingSupplier._id}`, formData)
+        .then((res) => {
+          setIsDialogOpen(false);
+          resetForm();
+          toast("Product updated successfully");
+          if (!suppliers) return;
+          const newSuppliers = suppliers.map((item) => item);
+          const productsIndex = suppliers.findIndex(
+            (item) => item._id === editingSupplier._id
+          );
+          newSuppliers.splice(productsIndex, 1, res.data);
+          setSuppliers(newSuppliers);
+        })
+        .catch((error) => {
+          console.log(error);
+          toast(error.response.data.message);
+        });
+    } else {
+      await axios
+        .post(`${backend}/suppliers/`, formData)
+        .then((res) => {
+          setSuppliers([...suppliers!, res.data]);
+          setIsDialogOpen(false);
+          resetForm();
+          toast("Product created successfully!");
+        })
+        .catch((error) => {
+          console.log(error);
+          toast("Error creating product");
+        });
+    }
+    setFormDisabled(false);
   };
 
   const handleEdit = (supplier: Supplier) => {
@@ -194,6 +230,7 @@ const Suppliers = () => {
               <div>
                 <Label htmlFor="supplier_code">Supplier Code</Label>
                 <Input
+                  disabled={formDisabled}
                   id="supplier_code"
                   value={formData.supplier_code}
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -205,6 +242,7 @@ const Suppliers = () => {
               <div>
                 <Label htmlFor="company_name">Company Name</Label>
                 <Input
+                  disabled={formDisabled}
                   id="company_name"
                   value={formData.company_name}
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -219,6 +257,7 @@ const Suppliers = () => {
               <div>
                 <Label htmlFor="contact_person">Contact Person</Label>
                 <Input
+                  disabled={formDisabled}
                   id="contact_person"
                   value={formData.contact_person}
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -229,6 +268,7 @@ const Suppliers = () => {
               <div>
                 <Label htmlFor="email">Email</Label>
                 <Input
+                  disabled={formDisabled}
                   id="email"
                   type="email"
                   value={formData.email}
@@ -243,6 +283,7 @@ const Suppliers = () => {
               <div>
                 <Label htmlFor="phone">Phone</Label>
                 <Input
+                  disabled={formDisabled}
                   id="phone"
                   value={formData.phone}
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -253,6 +294,7 @@ const Suppliers = () => {
               <div>
                 <Label htmlFor="rating">Rating (1-5)</Label>
                 <Input
+                  disabled={formDisabled}
                   id="rating"
                   type="number"
                   min="1"
@@ -271,6 +313,7 @@ const Suppliers = () => {
             <div>
               <Label htmlFor="address">Address</Label>
               <Input
+                disabled={formDisabled}
                 id="address"
                 value={formData.address}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -283,6 +326,7 @@ const Suppliers = () => {
               <div>
                 <Label htmlFor="city">City</Label>
                 <Input
+                  disabled={formDisabled}
                   id="city"
                   value={formData.city}
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -293,6 +337,7 @@ const Suppliers = () => {
               <div>
                 <Label htmlFor="country">Country</Label>
                 <Input
+                  disabled={formDisabled}
                   id="country"
                   value={formData.country}
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -308,6 +353,7 @@ const Suppliers = () => {
                   Specialties (comma-separated)
                 </Label>
                 <Input
+                  disabled={formDisabled}
                   id="specialties"
                   value={formData.specialties}
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -319,6 +365,7 @@ const Suppliers = () => {
               <div>
                 <Label htmlFor="payment_terms">Payment Terms</Label>
                 <Input
+                  disabled={formDisabled}
                   id="payment_terms"
                   value={formData.payment_terms}
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -331,6 +378,7 @@ const Suppliers = () => {
 
             <div className="flex justify-end space-x-4">
               <Button
+                disabled={formDisabled}
                 type="button"
                 variant="outline"
                 onClick={() => {
@@ -341,7 +389,7 @@ const Suppliers = () => {
               >
                 Cancel
               </Button>
-              <Button type="submit">
+              <Button type="submit" disabled={formDisabled}>
                 {editingSupplier ? "Update" : "Create"} Supplier
               </Button>
             </div>

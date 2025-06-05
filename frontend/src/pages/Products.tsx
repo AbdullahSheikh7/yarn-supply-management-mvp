@@ -451,6 +451,7 @@ const Products = () => {
 
             <div className="flex justify-end space-x-4">
               <Button
+                disabled={formDisabled}
                 type="button"
                 variant="outline"
                 onClick={() => {
@@ -461,7 +462,7 @@ const Products = () => {
               >
                 Cancel
               </Button>
-              <Button type="submit">
+              <Button type="submit" disabled={formDisabled}>
                 {editingProduct ? "Update" : "Create"} Product
               </Button>
             </div>
