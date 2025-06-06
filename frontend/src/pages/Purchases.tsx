@@ -159,7 +159,7 @@ const Purchases = () => {
             className="hover:shadow-lg transition-shadow"
           >
             <CardContent className="p-6">
-              <div className="flex justify-between items-start">
+              <div className="flex flex-col md:flex-row justify-between items-center">
                 <div className="flex-1">
                   <div className="flex items-center space-x-4 mb-2">
                     <h3 className="text-lg font-semibold">
@@ -207,7 +207,7 @@ const Purchases = () => {
                   )}
                 </div>
                 {purchase.status === "Pending" && (
-                  <div className="flex flex-col space-y-2">
+                  <div className="flex flex-col space-y-2 max-md:pt-5">
                     <Button onClick={() => markDelivered(purchase._id)}>
                       <PackageCheck className="mr-2 h-4 w-4" />
                       Mark as Delivered
