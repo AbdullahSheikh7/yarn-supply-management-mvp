@@ -106,8 +106,9 @@ const PurchaseForm = () => {
   }, []);
 
   const calculateTotalAmount = () => {
-    return formData.items?.reduce(
-      (total, item) => total + item.unit_price * item.quantity,
+    if (!formData.items) return 0;
+    return formData.items.reduce(
+      (total, item) => total + (item.unit_price || 0) * (item.quantity || 0),
       0
     );
   };
@@ -181,7 +182,7 @@ const PurchaseForm = () => {
 
       <form onSubmit={onSubmit} className="space-y-6">
         {/* Supplier Information */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid sm:grid-cols-2 gap-4">
           <Card>
             <CardHeader>
               <CardTitle>Supplier Information</CardTitle>
@@ -267,56 +268,53 @@ const PurchaseForm = () => {
           </CardHeader>
           <CardContent className="space-y-4">
             {formData?.items?.map((product, i) => (
-              <div key={i}>
-                <div className="p-4 border border-gray-400 rounded-lg space-y-4">
-                  <div className="flex justify-between items-center">
-                    <div className="flex flex-col gap-4">
-                      <h4 className="text-lg font-medium">
-                        {product.product_name}
-                      </h4>
-                      <div className="flex gap-4">
-                        <Badge variant="secondary">{product.category}</Badge>
-                        <div className="flex justify-between gap-1">
-                          <span className="text-sm text-gray-600">
-                            Material:
-                          </span>
-                          <span className="text-sm font-medium">
-                            {product.material_type}
-                          </span>
-                        </div>
-                        <div className="flex justify-between gap-1">
-                          <span className="text-sm text-gray-600">
-                            Unit price:
-                          </span>
-                          <span className="text-sm font-medium">
-                            ${product.unit_price}
-                          </span>
-                        </div>
-                        {product.color && (
-                          <div className="flex justify-between gap-1">
-                            <span className="text-sm text-gray-600">
-                              Color:
-                            </span>
-                            <span className="text-sm font-medium">
-                              {product.color}
-                            </span>
-                          </div>
-                        )}
+              <div
+                className="p-4 border border-gray-400 rounded-lg space-y-4"
+                key={i}
+              >
+                <div className="flex max-md:flex-col gap-4 justify-between md:items-center">
+                  <div className="flex flex-col gap-4">
+                    <h4 className="text-lg font-medium">
+                      {product.product_name}
+                    </h4>
+                    <div className="flex max-sm:flex-col sm:gap-4">
+                      <Badge variant="secondary" className="mb-4">
+                        {product.category}
+                      </Badge>
+                      <div className="flex justify-between gap-1">
+                        <span className="text-sm text-gray-600">Material:</span>
+                        <span className="text-sm font-medium">
+                          {product.material_type}
+                        </span>
                       </div>
+                      <div className="flex justify-between gap-1">
+                        <span className="text-sm text-gray-600">
+                          Unit price:
+                        </span>
+                        <span className="text-sm font-medium">
+                          ${product.unit_price}
+                        </span>
+                      </div>
+                      {product.color && (
+                        <div className="flex justify-between gap-1">
+                          <span className="text-sm text-gray-600">Color:</span>
+                          <span className="text-sm font-medium">
+                            {product.color}
+                          </span>
+                        </div>
+                      )}
                     </div>
-                    <div>
-                      <Label htmlFor={`quantity-${i}`}>Quantity</Label>
-                      <Input
-                        id={`quantity-${i}`}
-                        type="number"
-                        min="0"
-                        value={product?.quantity || 0}
-                        onChange={(value) =>
-                          handleQuantityChange(product, value)
-                        }
-                        required
-                      />
-                    </div>
+                  </div>
+                  <div>
+                    <Label htmlFor={`quantity-${i}`}>Quantity</Label>
+                    <Input
+                      id={`quantity-${i}`}
+                      type="number"
+                      min="0"
+                      value={product?.quantity || 0}
+                      onChange={(value) => handleQuantityChange(product, value)}
+                      required
+                    />
                   </div>
                 </div>
               </div>
